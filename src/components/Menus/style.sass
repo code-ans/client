@@ -1,0 +1,30 @@
+.menu-container
+  display: flex
+  border-right: 1px solid $border
+  .menu-toggler
+    width: 2rem
+    height: 2rem
+    z-index: 100
+    cursor: pointer
+    align-self: center
+    background-color: $border
+    &.is-active
+      background-color: $primary
+
+  .menu-list
+    height: 100%
+    width: 100%
+    overflow-y: auto
+    overflow-x: hidden
+    &.is-active
+      border-color: $primary
+    a.is-active
+      background-color: #e0eefa
+      color: $text
+
+  .menu
+    border-radius: 0
+    height: 42px
+    &.is-active
+      background-color: $background
+      border-right: 2px solid $info

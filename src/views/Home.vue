@@ -1,18 +1,33 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="full-container has-background is-flex">
+    <MenuList :menus="menus" width="200px"/>
+    <router-view class="is-flex-auto" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import MenuList from '@/components/Menus'
 
 export default {
-  name: 'home',
   components: {
-    HelloWorld
+    MenuList
+  },
+
+  data () {
+    return {
+      menus: [
+        {
+          text: 'Code Library',
+          icon: 'code',
+          route: { name: 'code' }
+        },
+        {
+          text: 'Task Manage',
+          icon: 'tasks',
+          route: { name: 'tasks' }
+        }
+      ]
+    }
   }
 }
 </script>

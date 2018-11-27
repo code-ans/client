@@ -1,31 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div class="app">
+    <router-view name="topbar"/>
+    <router-view class="is-flex-auto"/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+export default {
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
 }
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style src="@/packages/bulma/sass/index.sass" lang="sass"></style>
+
+<style lang="sass">
+.app
+  height: 100vh
+  display: flex
+  flex-flow: column
 </style>
