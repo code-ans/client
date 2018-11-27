@@ -6,10 +6,12 @@
     >
       <Checkbox :value="code.isSelected" />
     </td>
+    <td class="is-editable">{{code.pickAndPosition}}</td>
     <td class="is-editable">{{code.code}}</td>
+    <td class="is-editable">{{code.TMU * 1 * 10}}</td>
+    <td class="is-editable">{{code.TMU * 2 * 10}}</td>
+    <td class="is-editable">{{code.TMU * 3 * 10}}</td>
     <td class="is-editable">{{code.description}}</td>
-    <td class="is-editable">{{code.time}}</td>
-    <td class="is-editable">{{code.TMU}}</td>
   </tr>
 </template>
 
