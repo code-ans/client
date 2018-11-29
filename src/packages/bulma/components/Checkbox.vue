@@ -1,40 +1,71 @@
 <template>
-  <span
-    class="icon"
-    @click="$emit('click')"
-    style="cursor: pointer;"
-  >
-    <i v-if="value === true"
-      :class="`has-text-${color}`"
-      class="iconfont icon-checkbox-checked"
-    ></i>
-    <i v-else-if="value === 'minus'"
-      :class="`has-text-${color}`"
-      class="iconfont icon-checkbox-minus"
-    ></i>
-    <i v-else-if="value === false"
-      class="iconfont icon-checkbox-empty has-text-grey"
-    ></i>
-  </span>
+  <label
+    :class="labelClass"
+    :style="labelStyle"
+    @click="handleClick">
+    <span
+      :class="spanClass">
+      <i :class="'iconfont icon-' + iconName"/>
+    </span>
+    <slot/>
+  </label>
 </template>
 
 <script>
 export default {
-  model: {
-    prop: 'value'
-  },
-
   props: {
-    value: {
-      default: true
-    },
-
-    disabled: Boolean
+    inline: Boolean,
+    disabled: Boolean,
+    value: [Boolean, String]
   },
 
   computed: {
-    color () {
-      return this.disabled ? 'grey-light' : 'info'
+    iconName () {
+      switch (this.value) {
+        case true:
+          return 'checkbox-checked'
+        case false:
+          return 'checkbox-empty'
+        case 'minus':
+          return 'checkbox-minus'
+      }
+
+      return false
+    },
+
+    labelClass () {
+      return [
+        'checkbox',
+        this.disabled && 'has-text-grey-light'
+      ]
+    },
+
+    labelStyle () {
+      return {
+        display: this.inline ? 'inline' : 'block'
+      }
+    },
+
+    spanClass () {
+      let color = 'info'
+
+      if (this.disabled) color = 'grey-lighter'
+      else if (this.value === false) color = 'grey-light'
+
+      return [
+        'icon',
+        'has-text-' + color
+      ]
+    }
+  },
+
+  methods: {
+    handleClick () {
+      if (!this.disabled) {
+        this.$emit('input', Boolean(!this.value))
+      }
+
+      this.$emit('click')
     }
   }
 }

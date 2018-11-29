@@ -1,6 +1,6 @@
 <template>
   <div class="full-container has-background is-flex">
-    <MenuList :menus="menus" width="200px"/>
+    <MenuList :menus="menus" width="220px"/>
     <router-view class="is-flex-auto" />
   </div>
 </template>

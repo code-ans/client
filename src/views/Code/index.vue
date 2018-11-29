@@ -3,7 +3,7 @@
     class="full-container is-flex is-flex-column"
     style="padding: 0.5rem"
   >
-    <Loader v-if="isLoading"/>
+    <Loader v-if="isLoading.length"/>
     <template v-else>
       <div class="is-flex">
         <div class="buttons has-addons" style="margin-bottom: 0">
@@ -52,9 +52,8 @@
         <div class="table-container">
           <table class="table is-bordered is-fullwidth">
             <thead>
-              <th colspan="3"></th>
-              <th class="is-centered" colspan="3">TMU</th>
-              <th></th>
+              <th colspan="5"></th>
+              <th class="is-centered" colspan="4">TMU</th>
             </thead>
             <thead>
               <td
@@ -63,17 +62,20 @@
               >
                 <Checkbox :value="selectStatus"/>
               </td>
-              <th>Pick And Position</th>
               <th>Code</th>
+              <th>Pick</th>
+              <th>Pnd</th>
+              <th>Position</th>
               <th style="width: 1px">1</th>
               <th style="width: 1px">2</th>
               <th style="width: 1px">3</th>
-              <th>Description</th>
             </thead>
             <tbody>
               <CodeItem
-                v-for="id in codes.list" :key="id"
-                :code="codes.data[id]"
+                v-for="(id, key) in items.list" :key="id"
+                :index="key"
+                v-bind="items.data[id]"
+                @select="handleItemSelect"
               />
             </tbody>
           </table>
@@ -84,10 +86,13 @@
 </template>
 
 <script>
+import axios from '@/packages/axios'
+import { sleep } from '@/utils/async'
+
 import CodeItem from './Item'
 
 export default {
-  name: 'CodeManage',
+  name: 'Codes',
 
   components: {
     CodeItem
@@ -95,12 +100,12 @@ export default {
 
   data () {
     return {
-      codes: {
+      items: {
         list: [],
         data: {}
       },
 
-      isLoading: false
+      isLoading: []
     }
   },
 
@@ -109,8 +114,8 @@ export default {
       let hasSelectedItem = false
       let hasNotSelectedItem = false
 
-      for (let key in this.codes.data) {
-        const code = this.codes.data[key]
+      for (let key in this.items.data) {
+        const code = this.items.data[key]
 
         if (code.isSelected === true) {
           hasSelectedItem = true
@@ -129,51 +134,52 @@ export default {
   },
 
   methods: {
-    initialize () {
-      // 假数据
-      const list = []
-      const data = {}
+    getCodes () {
+      this.isLoading.push(0)
+      axios.post('codes/search')
+        .then(response => {
+          const data = {}
+          const list = []
+          response.data.forEach(item => {
+            list.push(item.id)
 
-      for (let i = 0; i < 100; i++) {
-        list.push(i)
+            item.isSelected = false
+            data[item.id] = item
+          })
 
-        data[i] = {
-          id: i,
-          code: 'Code ' + i,
-          description: 'Code Description ' + i,
-          pickAndPosition: 'Pick And Position ' + i,
-          TMU: i
-        }
+          this.items = { data, list }
+        })
+        .finally(() => this.isLoading.pop())
+    },
 
-        data[i].isSelected = false
-      }
-
-      this.codes = {
-        list, data
-      }
+    handleItemSelect (id) {
+      const item = this.items.data[id]
+      item.isSelected = !item.isSelected
     },
 
     handleClickSelect () {
-      const codes = this.codes.list.map(id => this.codes.data[id])
+      const items = this.items.list.map(id => this.items.data[id])
 
       switch (this.selectStatus) {
         case 'minus':
         case false:
-          codes.forEach(code => code.isSelected = true)
+          items.forEach(code => code.isSelected = true)
           break
         case true:
-          codes.forEach(code => code.isSelected = false)
+          items.forEach(code => code.isSelected = false)
       }
     }
   },
 
-  created () {
-    this.initialize()
+  async created () {
+    this.getCodes()
 
-    this.isLoading = true
-    setTimeout(() => {
-      this.isLoading = false
-    }, 333);
+    try {
+      this.isLoading.push(0)
+      await sleep(666)
+    } finally {
+      this.isLoading.pop()
+    }
   }
 }
 </script>

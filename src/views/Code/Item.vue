@@ -2,16 +2,17 @@
   <tr>
     <td
       style="cursor: pointer"
-      @click="code.isSelected = !code.isSelected"
+      @click="$emit('select', id)"
     >
-      <Checkbox :value="code.isSelected" />
+      <Checkbox :value="isSelected" />
     </td>
-    <td class="is-editable">{{code.pickAndPosition}}</td>
-    <td class="is-editable">{{code.code}}</td>
-    <td class="is-editable">{{code.TMU * 1 * 10}}</td>
-    <td class="is-editable">{{code.TMU * 2 * 10}}</td>
-    <td class="is-editable">{{code.TMU * 3 * 10}}</td>
-    <td class="is-editable">{{code.description}}</td>
+    <td class="is-editable">{{code}}</td>
+    <td class="is-editable">{{pick}}</td>
+    <td class="is-editable">{{pnd}}</td>
+    <td class="is-editable">{{position}}</td>
+    <td class="is-editable">{{tmu1}}</td>
+    <td class="is-editable">{{tmu2}}</td>
+    <td class="is-editable">{{tmu3}}</td>
   </tr>
 </template>
 
@@ -20,9 +21,45 @@ export default {
   name: 'CodeItem',
 
   props: {
-    index: Number,
+    id: Number,
+
     code: {
-      type: Object,
+      type: String,
+      required: true
+    },
+
+    pick: {
+      type: String,
+      required: true
+    },
+
+    pnd: {
+      type: String,
+      required: true
+    },
+
+    position: {
+      type: String,
+      required: true
+    },
+
+    tmu1: {
+      type: Number,
+      required: true
+    },
+
+    tmu2: {
+      type: Number,
+      required: true
+    },
+
+    tmu3: {
+      type: Number,
+      required: true
+    },
+
+    isSelected: {
+      type: Boolean,
       required: true
     }
   }

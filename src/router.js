@@ -21,16 +21,26 @@ export default new Router({
         {
           path: 'tasks',
           name: 'tasks',
-          component: () => import('./views/Tasks')
+          component: () => import('./views/Tasks'),
+          children: [
+            {
+              path: 'create',
+              name: 'task create',
+              component: () => import('./views/TaskDetail')
+            },
+            {
+              path: ':id',
+              name: 'task detail',
+              component: () => import('./views/TaskDetail')
+            }
+          ]
         }
       ]
     },
     {
       path: '/test',
       name: 'test',
-      component: {
-        default: () => import('./views/Test')
-      }
+      component: () => import('./views/Test')
     }
   ]
 })

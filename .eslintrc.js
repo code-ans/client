@@ -13,6 +13,7 @@ module.exports = {
     'camelcase': 'off',
     'comma-dangle': 'off',
     'no-return-assign': 'off',
+    'no-useless-return': 'off',
     'object-curly-spacing': 'off',
     'object-property-newline': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

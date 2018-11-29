@@ -38,23 +38,12 @@
     background-color: #f2f6ff
     td
       border-color: $border
-  &.is-editable
-    th,
-    td
-      white-space: nowrap
-      user-modify: read-write
-      -ms-user-modify: read-write
-      -webkit-user-modify: read-write
   th,
   td
     outline: 2px solid transparent
     &.is-error
       outline-color: $danger
-    &.is-editable
-      white-space: nowrap
-      user-modify: read-write
-      -ms-user-modify: read-write
-      -webkit-user-modify: read-write
+
     &.is-editable,
     &.is-selectable,
       &:hover
@@ -64,6 +53,7 @@
       &.is-focus
         cursor: text
         outline-color: #73a2e3
+        margin-left: 100px
       &.is-changed
         background-color: #f2f6ff
         font-weight: bold
