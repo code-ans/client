@@ -4,10 +4,7 @@
 
     <Loader delay="500" v-if="!isMounted"/>
 
-    <div v-else class="full-container has-background is-flex">
-      <MenuList :menus="menus" width="220px"/>
-      <router-view class="is-flex-auto" />
-    </div>
+    <router-view v-else class="is-flex-auto" />
   </div>
 </template>
 
@@ -24,19 +21,7 @@ export default {
 
   data () {
     return {
-      isMounted: false,
-      menus: [
-        {
-          text: 'Code Library',
-          icon: 'code',
-          route: { name: 'code' }
-        },
-        {
-          text: 'Task Manage',
-          icon: 'tasks',
-          route: { name: 'tasks' }
-        }
-      ]
+      isMounted: false
     }
   }
 }

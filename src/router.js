@@ -12,12 +12,12 @@ const routes = [
     children: [
       {
         path: 'code',
-        name: 'code',
+        name: 'code list',
         component: () => import('./views/Code')
       },
       {
         path: 'tasks',
-        name: 'tasks',
+        name: 'task list',
         component: () => import('./views/Tasks'),
         children: [
           {
