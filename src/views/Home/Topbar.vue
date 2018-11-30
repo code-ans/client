@@ -21,6 +21,12 @@
 
 <script>
 export default {
+  name: 'Topbar',
 
+  created () {
+    this.$emit('created')
+  }
 }
 </script>
+
+<style src="@/packages/bulma/sass/index.sass" lang="sass"></style>

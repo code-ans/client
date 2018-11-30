@@ -1,21 +1,35 @@
 <template>
-  <div class="app">
-    <router-view name="topbar"/>
-    <router-view class="is-flex-auto"/>
+  <div class="anestor">
+    <Loader v-if="isLoading" />
+    <router-view @created="isLoading = false" />
   </div>
 </template>
 
 <script>
-export default {
+import Loader from '@/packages/loader'
 
+export default {
+  name: 'Anestor',
+
+  components: {
+    Loader
+  },
+
+  data () {
+    return {
+      isLoading: true
+    }
+  }
 }
 </script>
 
-<style src="@/packages/bulma/sass/index.sass" lang="sass"></style>
-
-<style lang="sass">
-.app
-  height: 100vh
-  display: flex
-  flex-flow: column
+<style>
+.anestor {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  align-items: center;  
+  justify-content: center;
+}
 </style>

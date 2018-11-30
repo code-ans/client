@@ -1,5 +1,6 @@
 <template>
   <VueLoading
+    v-show="isDelayEnd"
     type="spin"
     :style="style"
   />
@@ -22,6 +23,16 @@ export default {
 
     size: {
       default: '4rem'
+    },
+
+    delay: {
+      type: [Number, String]
+    }
+  },
+
+  data () {
+    return {
+      isDelayEnd: false
     }
   },
 
@@ -34,6 +45,22 @@ export default {
         'padding-top': this.marginTop
       }
     }
+  },
+
+  methods: {
+    handleDelay () {
+      const delay = parseInt(this.delay)
+
+      if (isNaN(delay)) {
+        this.isDelayEnd = true
+      } else {
+        setTimeout(() => this.isDelayEnd = true, delay)
+      }
+    }
+  },
+
+  mounted () {
+    this.handleDelay()
   }
 }
 </script>
