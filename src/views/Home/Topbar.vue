@@ -20,6 +20,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import bulma from '@/packages/bulma/components'
+
+Vue.use(bulma)
+
 export default {
   name: 'Topbar',
 
