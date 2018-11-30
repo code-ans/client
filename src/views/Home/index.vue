@@ -2,23 +2,41 @@
   <div class="app">
     <TheTopbar @created="isMounted = true"/>
 
-    <router-view v-if="isMounted"/>
+    <Loader delay="500" v-if="!isMounted"/>
 
-    <Loader delay="500" v-else />
+    <div v-else class="full-container has-background is-flex">
+      <MenuList :menus="menus" width="220px"/>
+      <router-view class="is-flex-auto" />
+    </div>
   </div>
 </template>
 
 <script>
+import MenuList from '@/components/Menus'
+
 export default {
   name: 'Home',
 
   components: {
+    MenuList,
     TheTopbar: () => import('./Topbar')
   },
 
   data () {
     return {
-      isMounted: false
+      isMounted: false,
+      menus: [
+        {
+          text: 'Code Library',
+          icon: 'code',
+          route: { name: 'code' }
+        },
+        {
+          text: 'Task Manage',
+          icon: 'tasks',
+          route: { name: 'tasks' }
+        }
+      ]
     }
   }
 }
@@ -26,6 +44,7 @@ export default {
 
 <style lang="sass">
 .app
+  width: 100vw
   height: 100vh
   display: flex
   flex-flow: column
