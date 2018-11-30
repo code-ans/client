@@ -10,7 +10,7 @@
       <ul>
         <li
           :class="$route.path === '/tasks' && 'is-active'"
-          @click="$router.push({ name: 'tasks' })"
+          @click="$router.push({ name: 'task list' })"
         >
           <a>Tasks</a>
         </li>
