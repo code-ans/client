@@ -4,41 +4,21 @@
     @mouseout="isHovered = false"
   >
     <EditableCell
+      v-for="cell in primaryCells" :key="cell.prop"
       class="is-centered"
-      :value="code_and_distance"
+      :value="$props[cell.prop]"
       @input="$emit('update', {
-        prop: 'code_and_distance',
+        prop: cell.prop,
         value: $event
       })"
-    />
-    <EditableCell
-      class="is-centered"
-      :value="frequence"
-      @input="$emit('update', {
-        prop: 'frequence',
-        value: $event
-      })"
-    />
-    <EditableCell
-      class="is-centered"
-      :value="divider"
-      @input="$emit('update', {
-        prop: 'divider',
-        value: $event
-      })"
-    />
-    <td
-      v-text="type"
     />
     <td class="is-centered">{{description}}</td>
     <td class="is-centered">{{time}}</td>
     <td
+      class="is-centered"
       @click="$emit('remove')"
     >
-      <a
-        class="icon"
-        :class="'has-text-' + (isHovered ? 'danger' : 'white')"
-      >
+      <a :class="'icon has-text-' + (isHovered ? 'danger' : 'white')">
         <strong>
           <i class="iconfont icon-close"></i>
         </strong>
@@ -91,7 +71,13 @@ export default {
 
   data () {
     return {
-      isHovered: false
+      isHovered: false,
+      primaryCells: [
+        { prop: 'code_and_distance' },
+        { prop: 'frequence' },
+        { prop: 'divider' },
+        { prop: 'type' },
+      ]
     }
   },
 

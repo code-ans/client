@@ -1,75 +1,75 @@
 <template>
   <div class="full-container is-flex-auto is-flex">
-    <div
-      class="is-flex is-flex-column"
-      style="width: 300px; height: 100%"
-    >
-      <nav class="panel" style="margin-bottom: 0">
-        <div
-          class="panel-block has-text-grey"
-          style="font-size: 1rem;"
-        >
-          <label class="label">
-            Codes
-          </label>
-        </div>
-
-        <div class="panel-block" style="border-bottom: none">
-          <p class="control has-icons-left">
-            <input
-              class="input"
-              type="text"
-            >
-            <span class="icon is-left">
-              <i class="iconfont icon-search" aria-hidden="true"></i>
-            </span>
-          </p>
-        </div>
-      </nav>
-
-      <div class="is-bordered" style="overflow: auto">
-        <div class="is-panel">
-          <CodeItem
-            v-for="code in codes.list" :key="code"
-            :item="codes.data[code]"
-          />
-        </div>
-      </div>
-    </div>
+    <TheRightFields
+      :mode="mode"
+      v-bind="task"
+      @save="$wait(handleSave)"
+      @create="$wait(handleCreate)"
+      @update="handleUpdateTask"
+    />
 
     <Loader v-if="isLoading" />
 
     <template v-else>
       <div
-        class="is-flex-auto"
-        style="
-          overflow: auto;
-          padding-left: 0.25rem;
-          margin-left: 0.25rem;
-          margin-right: 0.5rem;
-        "
+        class="is-flex is-flex-column"
+        style="width: 300px; height: 100%"
       >
-        <TaskOperator
-          :style="index !== task.operators.length - 1 && 'margin-bottom: 0.5rem'"
-          v-for="(operator, index) in task.operators" :key="index"
-          v-bind="operator"
-          :index="index"
-          :codeLib="codes.data"
-          @add="handleAddOperator"
-          @remove="handleRemoveOperator"
-          @add-code="handleAddOperatorCode"
-          @remove-code="handleRemoveOperatorCode"
-          @update-code="handleUpdateOperatorCode"
-        />
+        <nav class="panel" style="margin-bottom: 0">
+          <div
+            class="panel-block has-text-grey"
+            style="font-size: 1rem;"
+          >
+            <label class="label">
+              Codes
+            </label>
+          </div>
+
+          <div class="panel-block" style="border-bottom: none">
+            <p class="control has-icons-left">
+              <input
+                class="input"
+                type="text"
+              >
+              <span class="icon is-left">
+                <i class="iconfont icon-search" aria-hidden="true"></i>
+              </span>
+            </p>
+          </div>
+        </nav>
+
+        <div class="is-bordered" style="overflow: auto">
+          <div class="is-panel">
+            <CodeItem
+              v-for="code in codes.list" :key="code"
+              :item="codes.data[code]"
+            />
+          </div>
+        </div>
       </div>
 
-      <TheRightFields
-        :mode="mode"
-        v-bind="task"
-        @save="$wait(handleSave)"
-        @create="$wait(handleCreate)"
-        @update="handleUpdateTask"
-      />
+      <div
+        class="is-flex-auto"
+        style="
+          display: flex;
+          flex-flow: row;
+          overflow: auto;
+          margin-left: 0.5rem;
+        "
+      >
+          <TaskOperator
+            :style="index !== task.operators.length - 1 && 'margin-right: 0.5rem'"
+            v-for="(operator, index) in task.operators" :key="index"
+            v-bind="operator"
+            :index="index"
+            :codeLib="codes.data"
+            @add="handleAddOperator"
+            @remove="handleRemoveOperator"
+            @add-code="handleAddOperatorCode"
+            @remove-code="handleRemoveOperatorCode"
+            @update-code="handleUpdateOperatorCode"
+          />
+      </div>
     </template>
   </div>
 </template>
@@ -134,7 +134,7 @@ export default {
         code_and_distance: '',
         frequence: '',
         divider: '',
-        type: '1'
+        type: ''
       }
     },
 
@@ -155,8 +155,11 @@ export default {
     },
 
     handleAddOperator (key) {
-      const len = this.task.operators.length + 1
-      this.task.operators.push(this.initOperator(len))
+      const len = this.task.operators.length
+
+      if (len === 1) {
+        this.task.operators.push(this.initOperator(len + 1))
+      }
     },
 
     handleRemoveOperator (key) {
@@ -176,7 +179,6 @@ export default {
     },
 
     handleUpdateOperatorCode ({index, key, type, prop, value}) {
-      console.log(index, key, prop, value)
       this.task.operators[index].codes[type][key][prop] = value
     },
 

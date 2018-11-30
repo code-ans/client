@@ -1,15 +1,18 @@
 <template>
-  <table class="table is-narrow is-bordered is-fullwidth is-nowrapped">
+  <table
+    class="table is-narrow is-bordered is-fullwidth is-nowrapped"
+    style="margin-right: 0.5rem"
+  >
     <TaskOperatorName
       :index="index"
       :name="name"
       v-on="$listeners"
     />
     <thead>
-      <th style="width: 1px">Code</th>
-      <th style="width: 1px">Frequence</th>
-      <th style="width: 1px">Divider</th>
-      <th style="width: 1px">Type</th>
+      <th style="width: 1px">Cod</th>
+      <th style="width: 1px">Feq</th>
+      <th style="width: 1px">Div</th>
+      <th style="width: 1px">Typ</th>
       <th class="is-centered">Description</th>
       <th style="width: 1px">Time</th>
       <th style="width: 1px"></th>
@@ -24,6 +27,7 @@
           type: type.prop
         })"
       />
+
       <tbody :key="type.prop + 'body'">
         <TaskOperatorCodeRow
           v-for="(code, key) in codes[type.prop]" :key="key"

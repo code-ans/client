@@ -1,7 +1,7 @@
 <template>
   <td
     class="is-editable"
-    contenteditable="true"
+    contenteditable
     v-html="input"
     @focus="isFocused = true"
     @blur="isFocused = false"
